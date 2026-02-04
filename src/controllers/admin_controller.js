@@ -1,6 +1,6 @@
 import Admin from "../models/admin.js";
 import Automatizacion from "../models/Automatizacion.js";
-import Grupo from "../models/Grupo.js";
+import Grupo from "../models/Grupos.js";
 
 
 // Obtener todos los administradores
