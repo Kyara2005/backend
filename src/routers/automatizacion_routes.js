@@ -1,4 +1,4 @@
-import { Router } from "express";
+import express from "express";
 import { reporteGrupos } from "../controllers/automatizacion_controller.js";
 
 const router = express.Router();
