@@ -1,36 +1,26 @@
 import Grupo from "../models/Grupos.js";
-import Usuario from "../models/Usuario.js";
 
 export const reporteGrupos = async (req, res) => {
     try {
-        const grupos = await Grupo.find()
-        .populate("creadoPor", "nombre email");
+        const grupos = await Grupo.find();
 
-        const reporte = await Promise.all(
-        grupos.map(async (grupo) => {
-            const totalUsuarios = await Usuario.countDocuments({
-            grupo: grupo._id
-            });
-
-            const usuariosConectados = await Usuario.countDocuments({
-            grupo: grupo._id,
-            online: true
-            });
-
-            return {
-            grupo: grupo.nombre,
-            totalUsuarios,
-            usuariosConectados,
-            creadoPor: grupo.creadoPor?.nombre
-            };
-        })
-        );
+        const reporte = grupos.map((grupo) => ({
+        grupo: grupo.nombre,
+        totalUsuarios: grupo.miembrosArray.length,
+        totalPosts: grupo.posts.length,
+        creadorEmail: grupo.creadorEmail
+        }));
 
         res.json({
         ok: true,
         reporte
         });
+
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("ERROR REPORTE:", error);
+        res.status(500).json({
+        ok: false,
+        message: "Error al generar reporte de grupos"
+        });
     }
 };
