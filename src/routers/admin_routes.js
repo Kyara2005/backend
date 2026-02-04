@@ -8,11 +8,6 @@ import {
     actualizarUsuario
 } from "../controllers/usuario_controller.js";
 
-import {
-    crearAutomatizacion,
-    listarAutomatizaciones
-} from "../controllers/admin_controller.js";
-
 const router = express.Router();
 
 /* ===== USUARIOS (SOLO ADMIN) ===== */
@@ -41,18 +36,4 @@ router.delete(
     deleteUser
 );
 
-/* 🔒 Automatización (ADMIN) */
-router.post(
-    "/automatizaciones",
-    verificarTokenJWT,
-    esAdmin,
-    crearAutomatizacion
-);
-
-router.get(
-    "/automatizaciones",
-    verificarTokenJWT,
-    esAdmin,
-    listarAutomatizaciones
-);
 export default router;

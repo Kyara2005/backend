@@ -1,7 +1,4 @@
 import Admin from "../models/admin.js";
-import Automatizacion from "../models/Automatizacion.js";
-import Grupo from "../models/Grupos.js";
-
 
 // Obtener todos los administradores
 export const getAdmins = async (req, res) => {
@@ -56,42 +53,5 @@ export const deleteAdmin = async (req, res) => {
     res.json({ message: "Administrador eliminado" });
   } catch (error) {
     res.status(500).json({ message: error.message });
-  }
-};
-
-/* 🔹 Crear automatización */
-export const crearAutomatizacion = async (req, res) => {
-  try {
-    const { nombre, descripcion, tipo, grupoId } = req.body;
-
-    const grupo = await Grupo.findById(grupoId);
-    if (!grupo) {
-      return res.status(404).json({ message: "Grupo no encontrado" });
-    }
-
-    const nueva = await Automatizacion.create({
-      nombre,
-      descripcion,
-      tipo,
-      grupo: grupoId,
-      creadoPor: req.usuario._id,
-    });
-
-    res.status(201).json(nueva);
-  } catch (error) {
-    res.status(500).json({ message: "Error al crear automatización" });
-  }
-};
-
-/* 🔹 Listar automatizaciones */
-export const listarAutomatizaciones = async (req, res) => {
-  try {
-    const lista = await Automatizacion.find()
-      .populate("grupo", "nombre")
-      .sort({ createdAt: -1 });
-
-    res.json(lista);
-  } catch (error) {
-    res.status(500).json({ message: "Error al listar automatizaciones" });
   }
 };

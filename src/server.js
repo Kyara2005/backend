@@ -7,6 +7,7 @@ import usuarioRouter from "./routers/usuario_routes.js";
 import gruposRouter from "./routers/grupos_routes.js"; // <--- AUMENTADO
 import { v2 as cloudinary } from "cloudinary";
 import adminRoutes from './routers/admin_routes.js';
+import automatizacionRouter from "./routers/automatizacion_routes.js";
 
 dotenv.config();
 
@@ -34,6 +35,8 @@ app.get("/", (req, res) => res.send("Server on"));
 app.use("/api/usuarios", usuarioRouter);
 app.use("/api/grupos", gruposRouter);
 app.use("/api/admins", adminRoutes);
+app.use("/api/automatizacion", automatizacionRouter);
+
 
 // Manejo de rutas no encontradas
 app.use((req, res) => res.status(404).send("Endpoint no encontrado - 404"));
